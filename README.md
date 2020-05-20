@@ -1,8 +1,8 @@
 # electron-app
 
 |Módulo|descriçao|
-|||
-|||
+|---|---|
+|`app`|modulo que orquestra os métodos no electron |
 |||
 
 ---
