@@ -1,9 +1,10 @@
 # electron-app
 
-|Módulo|descriçao|
-|---|---|
-|`app`|modulo que orquestra os métodos no electron |
-|||
+| Módulo           | descriçao                                                   |
+| ---------------- | ----------------------------------------------------------- |
+| `app`            | modulo que orquestra os métodos no electron                 |
+| `BrowserWindow`  | Permite criar uma nova janela ou gerenciar uma já existênte |
+| `Menu, menuItem` | orquestram os menus de navegação do app                     |
 
 ---
 
@@ -31,7 +32,7 @@
 
   // Sai quando todas janelas extiverem fechadas
   app.on("window-all-closed", function () {
-    // No macOS, é comum que os aplicativos e sua barra de menus permaneçam 
+    // No macOS, é comum que os aplicativos e sua barra de menus permaneçam
     // ativos até que o usuário saia explicitamente com Cmd + Q
     if (process.platform !== "darwin") app.quit();
   });
