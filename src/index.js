@@ -1,30 +1,40 @@
 const {
   app,
-  BrowserWindow
+  BrowserWindow,
+  globalShortcut
 } = require("electron");
 const path = require("path");
 
+let mainWindow;
+
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    titleBarStyle: 'hidden',
+    alwaysOnTop: true,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
     },
   });
 
   mainWindow.loadFile("index.html");
-
-  // Abri o DevTools.
-  // mainWindow.webContents.openDevTools()
 }
 
-app.whenReady().then(() => {
-  createWindow();
+function toggleDevTools() {
+  mainWindow.webContents.toggleDevTools()
+}
 
-  app.on("activate", function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
+function createShortcuts() {
+  globalShortcut.register('CmdOrCtrl+j', toggleDevTools)
+}
+
+app.whenReady()
+  .then(createWindow)
+  .then(createShortcuts);
+
+app.on("activate", function () {
+  if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
 
 app.on("window-all-closed", function () {
