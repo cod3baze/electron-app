@@ -1,3 +1,4 @@
 node_modules/**/*
+*sites.js
 .DS_Store
 .env
