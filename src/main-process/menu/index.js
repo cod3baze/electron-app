@@ -34,9 +34,17 @@ let template = [{
     }
   },
   {
-    label: 'Fixar',
+    label: '!Fixar',
     accelerator: 'CmdOrCtrl+Shift+P',
-    role: 'aba'
+    role: 'aba',
+    click: (item, focusedWindow) => {
+      if (focusedWindow) {
+        focusedWindow.alwaysOnTop = !focusedWindow.alwaysOnTop
+        focusedWindow.reload()
+        return
+      }
+      return
+    }
   },
   {
     label: 'Close',
@@ -49,7 +57,4 @@ let template = [{
   }
 ]
 
-module.exports = setMenu = () => {
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-}
+module.exports = template

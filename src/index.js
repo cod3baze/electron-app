@@ -2,10 +2,11 @@ const {
   app,
   BrowserWindow,
   globalShortcut,
-  dialog
+  dialog,
+  Menu
 } = require("electron");
-const setMenu = require('./main-process/menu')
-const {} = require('./utils/functions')
+const getTemplate = require('./main-process/menu')
+// const {} = require('./utils/functions')
 const {
   url
 } = require("./config/sites");
@@ -14,13 +15,14 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 1200,
+    maxWidth: 1300,
+    height: 630,
+    maxHeight: 800,
     titleBarStyle: "hidden",
     autoHideMenuBar: true,
     center: true,
     darkTheme: true,
-    maxHeight: 1100,
     title: "Loading..",
     alwaysOnTop: true,
     backgroundColor: "#212134",
@@ -28,6 +30,7 @@ function createWindow() {
       nodeIntegration: true,
       defaultFontSize: 14,
       nativeWindowOpen: true,
+      webviewTag: true,
     },
   });
 
@@ -56,11 +59,12 @@ function createShortcuts() {
   globalShortcut.register("CmdOrCtrl+j", toggleDevTools);
 }
 
-function handle_load_url(url) {
-  mainWindow.loadURL(url)
-}
+app.whenReady().then(() => {
+  const menu = Menu.buildFromTemplate(getTemplate)
+  Menu.setApplicationMenu(menu)
 
-app.whenReady().then(createWindow).then(createShortcuts);
+  createWindow()
+}).then(createShortcuts);
 
 app.on("activate", function () {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
